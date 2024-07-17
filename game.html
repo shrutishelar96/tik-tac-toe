@@ -1,0 +1,156 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game</title>
+</head>
+<style>
+    .main{
+        /* background-color: aqua; */
+        margin: 80px;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+       
+       
+      /* background-image: url('./css/AdobeStock_187233298_Video_HD_Preview.mov'); */
+
+    }
+    .container{
+        width: 30%;
+        height: 400px;
+        background-color:white;
+        padding-right: 10px;
+        text-align: center;
+        color: rgb(15, 15, 15);
+    }
+    .con-img{
+        width: 30%;
+        height: 350px;
+
+    }
+    #container1{
+        width: 30%;
+        height: 400px;
+        background-color: rgb(198, 132, 132);
+        text-align: center;
+        border-radius: 10px;
+    }
+    
+        .board {
+            padding-left: 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+
+        .cell:hover {
+            background-color: #ddd;
+        }
+     
+
+</style>
+<body >
+    <div class="main" >
+    <div class="container">
+          <h1>Player1</h1>
+          <hr>
+          <div class="con-img">
+          <img src="./players/player1.jpg" style="height: 320px; width: 410px;">
+          </div>
+     </div>
+
+
+    <div id="container1">
+     <h2>play Game</h2>
+     <hr>
+     <div class="board">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+     </div>
+      <p id="turn">Player1 Turn</p>
+        <p id="winner"></p>
+    </div>
+
+
+    <div class="container">
+  <h2>Player2</h2>
+  
+  <hr>
+  <div class="con-img">
+  <img src="./players/player2.jpg" style="height: 320px; width: 410px;">
+  </div>
+    </div>
+
+    </div>
+
+
+
+<script>
+
+    confirm("Do You Want to start game");
+     const cells = document.querySelectorAll('.cell');
+        let currentPlayer = '1';
+        let gameBoard = ['', '', '', '', '', '', '', '', ''];
+
+        function handleClick(index) {
+            if (!gameBoard[index] && !document.getElementById('winner').textContent) {
+                gameBoard[index] = currentPlayer;
+                cells[index].textContent = currentPlayer;
+                currentPlayer = currentPlayer === '1' ? '2' : '1';
+                document.getElementById('turn').textContent = `Player ${currentPlayer}'s Turn`;
+                checkWinner();
+            }
+        }
+
+        function checkWinner() {
+            const winningConditions = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+           
+            for (let condition of winningConditions) {
+                const [a, b, c] = condition;
+                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+                    document.getElementById('winner').textContent = alert( `Player ${gameBoard[a]} Wins!`);
+                    
+                    break;
+                }
+            }
+        }
+
+        cells.forEach((cell, index) => {
+            cell.addEventListener('click', () => handleClick(index));
+        }); 
+</script>
+</body>
+</html>
